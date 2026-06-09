@@ -36,3 +36,58 @@
 - `web-read-deep`
   深度版，适合动态渲染、分页、转写、接口鉴权等复杂场景
 
+## 配置指南
+
+### 1. 安装 skill
+
+将以下目录放到 agent 的 skills 目录中：
+
+- `web-read`
+- `web-read-deep`
+
+### 2. Codex 配置
+
+在仓库根目录执行：
+
+```bash
+mkdir -p ~/.codex/skills && cp -R agent-skills/web-read agent-skills/web-read-deep ~/.codex/skills/
+```
+
+### 3. OpenCode 配置
+
+在仓库根目录执行：
+
+```bash
+mkdir -p ~/.config/opencode/skills && cp -R agent-skills/web-read agent-skills/web-read-deep ~/.config/opencode/skills/
+```
+
+### 4. 浏览器能力要求
+
+如果 agent 只有静态网页抓取能力，这套 skill 无法完整工作。  
+要支持“先打开页面，再登录/授权，再继续读取动态内容”，agent 需要可控浏览器能力。
+
+### 5. OpenCode 配置 Playwright MCP
+
+如果你在 OpenCode 中使用，推荐配置 Playwright MCP：
+
+```json
+"mcp": {
+  "playwright": {
+    "type": "local",
+    "enabled": true,
+    "command": ["npx", "-y", "@playwright/mcp"]
+  }
+}
+```
+
+将这段加入 `~/.config/opencode/opencode.jsonc` 后，重启 OpenCode。
+
+### 6. 使用方式
+
+日常直接说：
+
+- `看一下这个链接里的内容`
+
+复杂场景可以明确说：
+
+- `用 web-read-deep 看一下这个链接里的动态内容`
